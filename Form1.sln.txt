@@ -1,0 +1,86 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+namespace guessnumber
+{
+    public partial class Form1 : Form
+    {
+        private int randomNumber;
+        private const int MinNumber = 1;
+        private const int MaxNumber = 1000;
+        public Form1()
+        {
+            InitializeComponent();
+            StartNewGame();
+
+        }
+        private void StartNewGame()
+        {
+            Random rand = new Random();
+            randomNumber = rand.Next(MinNumber, MaxNumber + 1);
+
+            labelins.Text = "I have a number between 1 and 1000--can you guess my number?";
+            textBoxguess.Text = "";
+            textBoxguess.Enabled = true;
+            buttonguess.Enabled = true;
+            this.BackColor = DefaultBackColor;
+        }
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void buttonguess_Click(object sender, EventArgs e)
+        {
+
+            for (int i = 0; i < 10; i++)
+            {
+                label1.Enabled = true;
+                try
+                {
+                    int userGuess = int.Parse(textBoxguess.Text);
+
+                    if (userGuess == randomNumber)
+                    {
+                        label1.Text = "Correct!";
+                        this.BackColor = Color.Green;
+                        textBoxguess.Enabled = false;
+                        buttonguess.Enabled = false;
+                    }
+                    else
+                    {
+                        if (userGuess > randomNumber)
+                        {
+                            label1.Text = "Too High,try another number";
+                            this.BackColor = Color.Blue;
+                            label1.Enabled = true;
+                        }
+                        else
+                        {
+                            label1.Text = "Too Low, try another number";
+                            this.BackColor = Color.Red;
+                            label1.Enabled = true;
+                        }
+
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Please enter a valid number.");
+                }
+            }
+        }
+
+        private void buttonrestart_Click(object sender, EventArgs e)
+        {
+            StartNewGame();
+        }
+    }
+}
+
